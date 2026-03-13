@@ -119,4 +119,30 @@ SENSOR_TYPES: tuple[CadvisorSensorEntityDescription, ...] = (
         icon="mdi:folder",
         value_path="filesystem_percent",
     ),
+    CadvisorSensorEntityDescription(
+        key="started",
+        translation_key="started",
+        device_class=SensorDeviceClass.TIMESTAMP,
+        icon="mdi:clock-start",
+        value_path="start_time",
+    ),
+    CadvisorSensorEntityDescription(
+        key="status",
+        translation_key="status",
+        icon="mdi:docker",
+        value_path="status",
+    ),
+    CadvisorSensorEntityDescription(
+        key="image",
+        translation_key="image",
+        icon="mdi:package-variant",
+        value_path="image",
+    ),
+    CadvisorSensorEntityDescription(
+        key="container_id",
+        translation_key="container_id",
+        icon="mdi:identifier",
+        entity_registry_enabled_default=False,
+        value_path="container_id_short",
+    ),
 )

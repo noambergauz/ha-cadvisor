@@ -65,6 +65,18 @@ Each container exposes the following sensors:
 | Disk write | Total disk bytes written |
 | Filesystem usage | Filesystem usage in bytes |
 | Filesystem usage percent | Filesystem usage percentage |
+| Started | Container start timestamp (shows uptime) |
+| Status | Container running status |
+| Image | Docker image name and tag |
+| Container ID | Short container ID (disabled by default) |
+
+## Binary Sensors
+
+| Binary Sensor | Description |
+|---------------|-------------|
+| Running | On when container is running, off when stopped |
+
+The Status sensor includes Docker labels as attributes (if any).
 
 ## Options
 
