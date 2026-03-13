@@ -1,0 +1,12 @@
+{
+  "domain": "cadvisor",
+  "name": "cAdvisor",
+  "codeowners": [],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/noambergauz/ha-cadvisor",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/noambergauz/ha-cadvisor/issues",
+  "requirements": ["aiohttp>=3.8.0"],
+  "version": "1.0.0"
+}

@@ -1,0 +1,65 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to cAdvisor",
+        "description": "Enter the connection details for your cAdvisor instance.",
+        "data": {
+          "host": "Host",
+          "port": "Port"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to cAdvisor. Please check the host and port.",
+      "timeout": "Connection timed out. Please check if cAdvisor is running."
+    },
+    "abort": {
+      "already_configured": "This cAdvisor instance is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "cAdvisor Options",
+        "data": {
+          "scan_interval": "Scan interval (seconds)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "cpu_usage_percent": {
+        "name": "CPU usage"
+      },
+      "memory_usage": {
+        "name": "Memory usage"
+      },
+      "memory_usage_percent": {
+        "name": "Memory usage percent"
+      },
+      "memory_limit": {
+        "name": "Memory limit"
+      },
+      "network_rx_bytes": {
+        "name": "Network received"
+      },
+      "network_tx_bytes": {
+        "name": "Network transmitted"
+      },
+      "disk_read_bytes": {
+        "name": "Disk read"
+      },
+      "disk_write_bytes": {
+        "name": "Disk write"
+      },
+      "filesystem_usage": {
+        "name": "Filesystem usage"
+      },
+      "filesystem_usage_percent": {
+        "name": "Filesystem usage percent"
+      }
+    }
+  }
+}

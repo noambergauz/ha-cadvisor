@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: HACS Validation
+        uses: hacs/action@main
+        with:
+          category: integration
+
+      - name: Hassfest Validation
+        uses: home-assistant/actions/hassfest@master
+
+      - name: Get version from tag
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Update manifest version
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+          VERSION=${VERSION#v}
+          jq --arg v "$VERSION" '.version = $v' custom_components/cadvisor/manifest.json > tmp.json
+          mv tmp.json custom_components/cadvisor/manifest.json
+
+      - name: Create release archive
+        run: |
+          cd custom_components
+          zip -r ../cadvisor.zip cadvisor
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: cadvisor.zip
