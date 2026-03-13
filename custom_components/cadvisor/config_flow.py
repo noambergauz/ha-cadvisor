@@ -21,7 +21,9 @@ class CadvisorConfigFlow(ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
 
-    async def async_step_user(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
+    async def async_step_user(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
         """Handle the initial step."""
         errors: dict[str, str] = {}
 
@@ -61,16 +63,15 @@ class CadvisorConfigFlow(ConfigFlow, domain=DOMAIN):
     @callback
     def async_get_options_flow(config_entry: ConfigEntry) -> OptionsFlow:
         """Get the options flow for this handler."""
-        return CadvisorOptionsFlow(config_entry)
+        return CadvisorOptionsFlow()
 
 
 class CadvisorOptionsFlow(OptionsFlow):
     """Handle options flow for cAdvisor."""
 
-    def __init__(self, config_entry: ConfigEntry) -> None:
-        self.config_entry = config_entry
-
-    async def async_step_init(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
+    async def async_step_init(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
         """Manage the options."""
         if user_input is not None:
             return self.async_create_entry(title="", data=user_input)

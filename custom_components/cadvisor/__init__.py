@@ -6,7 +6,7 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from .const import CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
 from .coordinator import CadvisorApiClient, CadvisorCoordinator
 
-PLATFORMS: list[Platform] = [Platform.SENSOR]
+PLATFORMS: list[Platform] = [Platform.BINARY_SENSOR, Platform.SENSOR]
 
 type CadvisorConfigEntry = ConfigEntry[CadvisorCoordinator]
 

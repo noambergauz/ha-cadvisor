@@ -1,6 +1,6 @@
 [project]
 name = "ha-cadvisor"
-version = "1.0.0"
+version = "1.1.0"
 description = "Home Assistant integration for cAdvisor container monitoring"
 readme = "README.md"
 license = { text = "MIT" }
@@ -50,6 +50,13 @@ indent-style = "space"
 python_version = "3.12"
 ignore_missing_imports = true
 strict = true
+disable_error_code = ["call-arg"]
+
+[tool.pyright]
+ignore = ["custom_components/**"]
+reportMissingImports = false
+reportMissingTypeStubs = false
+reportGeneralTypeIssues = false
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

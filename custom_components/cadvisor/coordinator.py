@@ -19,6 +19,8 @@ class ContainerStats:
     container_id: str
     name: str
     image: str
+    start_time: str | None
+    labels: dict[str, str]
     cpu_percent: float | None
     memory: dict[str, int]
     memory_percent: float | None
@@ -95,7 +97,10 @@ class CadvisorApiClient:
 
         aliases = info.get("aliases", [])
         name = aliases[0] if aliases else container_id[:12]
-        image = info.get("spec", {}).get("image", "unknown")
+        spec = info.get("spec", {})
+        image = spec.get("image", "unknown")
+        start_time = spec.get("creation_time")
+        labels = spec.get("labels", {})
 
         latest_stats = info["stats"][-1]
         cpu_percent = self._calculate_cpu_percent(container_id, info["stats"], num_cores)
@@ -110,6 +115,8 @@ class CadvisorApiClient:
             container_id=container_id,
             name=name,
             image=image,
+            start_time=start_time,
+            labels=labels,
             cpu_percent=cpu_percent,
             memory=memory,
             memory_percent=memory_percent,

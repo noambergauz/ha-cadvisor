@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 from typing import Any
 
 from homeassistant.components.sensor import SensorEntity
@@ -69,7 +70,7 @@ class CadvisorSensor(CoordinatorEntity[CadvisorCoordinator], SensorEntity):
         )
 
     @property
-    def native_value(self) -> float | int | None:
+    def native_value(self) -> float | int | datetime | str | None:
         """Return the state of the sensor."""
         if not self.available:
             return None
@@ -78,7 +79,43 @@ class CadvisorSensor(CoordinatorEntity[CadvisorCoordinator], SensorEntity):
         if not container:
             return None
 
-        return self._get_value(container, self.entity_description.value_path)
+        value = self._get_value(container, self.entity_description.value_path)
+
+        # Convert ISO timestamp string to datetime for timestamp sensors
+        if self.entity_description.key == "started" and isinstance(value, str):
+            try:
+                return datetime.fromisoformat(value.replace("Z", "+00:00"))
+            except ValueError:
+                return None
+
+        # Status sensor always returns "running" if container is in data
+        if self.entity_description.key == "status":
+            return "running"
+
+        # Container ID sensor returns short ID (first 12 chars)
+        if self.entity_description.key == "container_id":
+            return container.container_id[:12]
+
+        return value
+
+    @property
+    def extra_state_attributes(self) -> dict[str, Any] | None:
+        """Return additional state attributes."""
+        if not self.available:
+            return None
+
+        container = self.coordinator.data.containers.get(self._container_id)
+        if not container:
+            return None
+
+        # Only add labels attribute to the status sensor
+        if self.entity_description.key != "status":
+            return None
+
+        if container.labels:
+            return {"labels": container.labels}
+
+        return None
 
     def _get_value(self, container: ContainerStats, path: str) -> Any:
         """Get value from container stats using dot-notation path."""

@@ -29,6 +29,11 @@
     }
   },
   "entity": {
+    "binary_sensor": {
+      "running": {
+        "name": "Running"
+      }
+    },
     "sensor": {
       "cpu_usage_percent": {
         "name": "CPU usage"
@@ -59,6 +64,18 @@
       },
       "filesystem_usage_percent": {
         "name": "Filesystem usage percent"
+      },
+      "started": {
+        "name": "Started"
+      },
+      "status": {
+        "name": "Status"
+      },
+      "image": {
+        "name": "Image"
+      },
+      "container_id": {
+        "name": "Container ID"
       }
     }
   }
